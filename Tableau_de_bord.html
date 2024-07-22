@@ -1,0 +1,374 @@
+<html><head><base href="https://localhost/">
+<title>Dashboard - Tableau de Bord</title>
+<link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+<link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css" rel="stylesheet">
+<style>
+  body {
+    overflow-x: hidden;
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
+  }
+  #sidebar-wrapper {
+    min-height: 100vh;
+    width: 250px;
+    position: fixed;
+    z-index: 1;
+    top: 0;
+    left: 0;
+    background-color: #343a40;
+    overflow-x: hidden;
+    transition: 0.5s;
+    padding-top: 20px;
+  }
+  #sidebar-wrapper .sidebar-heading {
+    padding: 0.875rem 1.25rem;
+    font-size: 1.2rem;
+    color: #fff;
+  }
+  #page-content-wrapper {
+    margin-left: 250px;
+    width: calc(100% - 250px);
+    transition: margin-left .5s;
+  }
+  .list-group-item {
+    background-color: #343a40;
+    color: #fff;
+    border: none;
+    padding: 15px 20px;
+  }
+  .list-group-item:hover {
+    background-color: #23272b;
+    color: #fff;
+  }
+  .list-group-item i {
+    margin-right: 10px;
+  }
+  .submenu .list-group-item {
+    padding-left: 40px;
+  }
+  .logo {
+    max-width: 100px;
+    margin-bottom: 10px;
+  }
+  .sidebar-heading {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+  }
+  .footer {
+    background-color: #f8f9fa;
+    padding: 20px 0;
+    margin-top: auto;
+  }
+  #content {
+    padding: 20px;
+  }
+  #menu-toggle {
+    display: none;
+  }
+  .card {
+    border: none;
+    border-radius: 10px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    margin-bottom: 20px;
+  }
+  .card-title {
+    font-size: 1.25rem;
+    font-weight: bold;
+  }
+  .card-img-left {
+    width: 100px;
+    height: 100px;
+    object-fit: cover;
+    border-radius: 10px 0 0 10px;
+  }
+  .numbers-cell {
+    font-size: 1.5rem;
+    font-weight: bold;
+  }
+  .status-card {
+    text-align: center;
+  }
+  .status-card .card-body {
+    padding: 1rem;
+  }
+  .status-card .card-title {
+    margin-bottom: 0.5rem;
+  }
+  .status-card .numbers-cell {
+    font-size: 2rem;
+  }
+  .lottery-numbers {
+    font-size: 1.25rem;
+    font-weight: bold;
+  }
+  .btn-rapport {
+    font-size: 1.25rem;
+    padding: 0.75rem 1.5rem;
+  }
+  @media (max-width: 768px) {
+    #sidebar-wrapper {
+      left: -250px;
+    }
+    #sidebar-wrapper.active {
+      left: 0;
+    }
+    #page-content-wrapper {
+      margin-left: 0;
+      width: 100%;
+    }
+    #page-content-wrapper.active {
+      margin-left: 250px;
+    }
+    #menu-toggle {
+      display: block;
+    }
+  }
+</style>
+</head>
+<body>
+<div class="d-flex" id="wrapper">
+  <!-- Sidebar -->
+  <div id="sidebar-wrapper">
+    <div class="sidebar-heading">
+      <img src="https://via.placeholder.com/100" alt="Logo" class="logo">
+      <span>Nom de l'entreprise</span>
+    </div>
+    <div class="list-group list-group-flush">
+      <a href="Tableau_de_bord.html" class="list-group-item list-group-item-action active"><i class="fas fa-tachometer-alt"></i> Tableau de bord</a>
+      <a href="mon_compte.html" class="list-group-item list-group-item-action"><i class="fas fa-user"></i> Mon compte</a>
+      <a href="Bank.html" class="list-group-item list-group-item-action"><i class="fas fa-piggy-bank"></i> Bank</a>
+      <a href="Agent_Vendeurs.html" class="list-group-item list-group-item-action"><i class="fas fa-users"></i> Agent/Vendeur</a>
+      
+      <!-- Configuration Dropdown -->
+      <a href="#configSubmenu" data-toggle="collapse" aria-expanded="false" class="list-group-item list-group-item-action dropdown-toggle"><i class="fas fa-cogs"></i> Configuration</a>
+      <div class="collapse submenu" id="configSubmenu">
+        <a href="https://websim.ai/configuration/tirages" class="list-group-item list-group-item-action"><i class="fas fa-dice"></i> Tirages</a>
+        <a href="https://websim.ai/configuration/primes" class="list-group-item list-group-item-action"><i class="fas fa-trophy"></i> Primes</a>
+        <a href="https://websim.ai/configuration/utilisateurs" class="list-group-item list-group-item-action"><i class="fas fa-user-cog"></i> Utilisateurs</a>
+      </div>
+      
+      <!-- Surveillance Dropdown -->
+      <a href="#survSubmenu" data-toggle="collapse" aria-expanded="false" class="list-group-item list-group-item-action dropdown-toggle"><i class="fas fa-eye"></i> Surveillance</a>
+      <div class="collapse submenu" id="survSubmenu">
+        <a href="https://websim.ai/surveillance/blocage-boules" class="list-group-item list-group-item-action"><i class="fas fa-ban"></i> Blocage boules</a>
+        <a href="https://websim.ai/surveillance/limites" class="list-group-item list-group-item-action"><i class="fas fa-chart-line"></i> Limites</a>
+        <a href="https://websim.ai/surveillance/lots-gagnant" class="list-group-item list-group-item-action"><i class="fas fa-gift"></i> Lots gagnant</a>
+      </div>
+      
+      <!-- Rapport Dropdown -->
+      <a href="#rapportSubmenu" data-toggle="collapse" aria-expanded="false" class="list-group-item list-group-item-action dropdown-toggle"><i class="fas fa-chart-bar"></i> Rapport</a>
+      <div class="collapse submenu" id="rapportSubmenu">
+        <a href="https://websim.ai/rapport/journalier" class="list-group-item list-group-item-action"><i class="fas fa-calendar-day"></i> Journalier</a>
+        <a href="https://websim.ai/rapport/bilan" class="list-group-item list-group-item-action"><i class="fas fa-balance-scale"></i> Bilan</a>
+        <a href="https://websim.ai/rapport/fiche-gagnant" class="list-group-item list-group-item-action"><i class="fas fa-trophy"></i> Fiche gagnant</a>
+        <a href="https://websim.ai/rapport/fiche-vendu" class="list-group-item list-group-item-action"><i class="fas fa-receipt"></i> Fiche vendu</a>
+        <a href="https://websim.ai/rapport/fiche-eliminer" class="list-group-item list-group-item-action"><i class="fas fa-times-circle"></i> Fiche eliminer</a>
+      </div>
+    </div>
+  </div>
+  
+  <!-- Page Content -->
+  <div id="page-content-wrapper">
+    <nav class="navbar navbar-expand-lg navbar-light bg-light border-bottom">
+      <button class="btn btn-primary" id="menu-toggle"><i class="fas fa-bars"></i></button>
+      <div class="ml-auto">
+        <button class="btn btn-danger">
+          <i class="fas fa-power-off"></i> Déconnexion
+        </button>
+      </div>
+    </nav>
+    
+    <div id="content">
+      <h1 class="mt-4 mb-4">Tableau de Bord</h1>
+      
+      <div class="row">
+        <!-- Georgia Card -->
+        <div class="col-md-4">
+          <div class="card">
+            <div class="row no-gutters">
+              <div class="col-4">
+                <img src="https://via.placeholder.com/100x200?text=Georgia" alt="Georgia" class="card-img-left h-100">
+              </div>
+              <div class="col-8">
+                <div class="card-body">
+                  <h5 class="card-title">Georgia Midi Aujourd'hui</h5>
+                  <div class="numbers-cell mb-3">
+                    <span>23</span> - <span>45</span> - <span>67</span>
+                  </div>
+                  <h5 class="card-title">Georgia Soir Aujourd'hui</h5>
+                  <div class="numbers-cell">
+                    <span>12</span> - <span>34</span> - <span>56</span>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        
+        <!-- Florida Card -->
+        <div class="col-md-4">
+          <div class="card">
+            <div class="row no-gutters">
+              <div class="col-4">
+                <img src="https://via.placeholder.com/100x200?text=Florida" alt="Florida" class="card-img-left h-100">
+              </div>
+              <div class="col-8">
+                <div class="card-body">
+                  <h5 class="card-title">Florida Midi Aujourd'hui</h5>
+                  <div class="numbers-cell mb-3">
+                    <span>78</span> - <span>90</span> - <span>12</span>
+                  </div>
+                  <h5 class="card-title">Florida Soir Aujourd'hui</h5>
+                  <div class="numbers-cell">
+                    <span>34</span> - <span>56</span> - <span>78</span>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        
+        <!-- New York Card -->
+        <div class="col-md-4">
+          <div class="card">
+            <div class="row no-gutters">
+              <div class="col-4">
+                <img src="https://via.placeholder.com/100x200?text=New+York" alt="New York" class="card-img-left h-100">
+              </div>
+              <div class="col-8">
+                <div class="card-body">
+                  <h5 class="card-title">New York Midi Aujourd'hui</h5>
+                  <div class="numbers-cell mb-3">
+                    <span>89</span> - <span>01</span> - <span>23</span>
+                  </div>
+                  <h5 class="card-title">New York Soir Aujourd'hui</h5>
+                  <div class="numbers-cell">
+                    <span>45</span> - <span>67</span> - <span>89</span>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      
+      <div class="row mt-4">
+        <!-- Agent/Vendeur Card -->
+        <div class="col-md-4">
+          <div class="card status-card bg-warning">
+            <div class="card-body">
+              <h5 class="card-title text-white">Agent/Vendeur</h5>
+              <div class="numbers-cell text-white">147</div>
+            </div>
+          </div>
+        </div>
+        
+        <!-- Fiches Card -->
+        <div class="col-md-4">
+          <div class="card status-card bg-success">
+            <div class="card-body">
+              <h5 class="card-title text-white">Fiches</h5>
+              <div class="numbers-cell text-white">1,234</div>
+            </div>
+          </div>
+        </div>
+        
+        <!-- Agent Inactif Card -->
+        <div class="col-md-4">
+          <div class="card status-card bg-danger">
+            <div class="card-body">
+              <h5 class="card-title text-white">Agent Inactif</h5>
+              <div class="numbers-cell text-white">23</div>
+            </div>
+          </div>
+        </div>
+      </div>
+      
+      <div class="card mt-4">
+        <div class="card-body">
+          <h5 class="card-title">Numéros Sortants de la Loterie</h5>
+          <div class="table-responsive">
+            <table class="table table-bordered">
+              <thead>
+                <tr>
+                  <th>Date</th>
+                  <th>Midi</th>
+                  <th>Soir</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td>Aujourd'hui</td>
+                  <td class="lottery-numbers">23 - 45 - 67</td>
+                  <td class="lottery-numbers">12 - 34 - 56</td>
+                </tr>
+                <tr>
+                  <td>Hier</td>
+                  <td class="lottery-numbers">78 - 90 - 12</td>
+                  <td class="lottery-numbers">34 - 56 - 78</td>
+                </tr>
+                <tr>
+                  <td>Avant-hier</td>
+                  <td class="lottery-numbers">89 - 01 - 23</td>
+                  <td class="lottery-numbers">45 - 67 - 89</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+      
+      <div class="text-center mt-4 mb-4">
+        <a href="https://websim.ai/rapport-journalier" class="btn btn-primary btn-lg btn-block btn-rapport">Rapport Journalier</a>
+      </div>
+    </div>
+  </div>
+</div>
+
+<footer class="footer">
+  <div class="container">
+    <div class="row">
+      <div class="col-md-6">
+        <p>&copy; 2023 Dashboard Loterie. Tous droits réservés.</p>
+      </div>
+      <div class="col-md-6 text-md-right">
+        <a href="#" class="text-muted mr-3">Conditions d'utilisation</a>
+        <a href="#" class="text-muted">Politique de confidentialité</a>
+      </div>
+    </div>
+  </div>
+</footer>
+
+<script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.3/dist/umd/popper.min.js"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+<script>
+  $(document).ready(function() {
+    $("#menu-toggle").click(function(e) {
+      e.preventDefault();
+      $("#wrapper").toggleClass("toggled");
+      $("#sidebar-wrapper").toggleClass("active");
+      $("#page-content-wrapper").toggleClass("active");
+    });
+
+    function checkWidth() {
+      if ($(window).width() <= 768) {
+        $("#wrapper").addClass("toggled");
+        $("#sidebar-wrapper").removeClass("active");
+        $("#page-content-wrapper").removeClass("active");
+      } else {
+        $("#wrapper").removeClass("toggled");
+        $("#sidebar-wrapper").addClass("active");
+        $("#page-content-wrapper").addClass("active");
+      }
+    }
+
+    checkWidth();
+    $(window).resize(checkWidth);
+  });
+</script>
+</body>
+</html>

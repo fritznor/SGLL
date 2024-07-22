@@ -1,0 +1,327 @@
+<html><head><base href="https://localhost/">
+<title>Dashboard - Bank</title>
+<link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+<link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css" rel="stylesheet">
+<style>
+  body {
+    overflow-x: hidden;
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
+  }
+  #sidebar-wrapper {
+    min-height: 100vh;
+    width: 250px;
+    position: fixed;
+    z-index: 1;
+    top: 0;
+    left: 0;
+    background-color: #343a40;
+    overflow-x: hidden;
+    transition: 0.5s;
+    padding-top: 20px;
+  }
+  #sidebar-wrapper .sidebar-heading {
+    padding: 0.875rem 1.25rem;
+    font-size: 1.2rem;
+    color: #fff;
+  }
+  #page-content-wrapper {
+    margin-left: 250px;
+    width: calc(100% - 250px);
+    transition: margin-left .5s;
+  }
+  .list-group-item {
+    background-color: #343a40;
+    color: #fff;
+    border: none;
+    padding: 15px 20px;
+  }
+  .list-group-item:hover {
+    background-color: #23272b;
+    color: #fff;
+  }
+  .list-group-item i {
+    margin-right: 10px;
+  }
+  .submenu .list-group-item {
+    padding-left: 40px;
+  }
+  .logo {
+    max-width: 100px;
+    margin-bottom: 10px;
+  }
+  .sidebar-heading {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+  }
+  .footer {
+    background-color: #f8f9fa;
+    padding: 20px 0;
+    margin-top: auto;
+  }
+  #content {
+    padding: 20px;
+  }
+  #menu-toggle {
+    display: none;
+  }
+  .form-group {
+    margin-bottom: 2rem;
+  }
+  .table-responsive {
+    overflow-x: auto;
+  }
+  .table-scroll-container {
+    position: relative;
+    width: 100%;
+    overflow-x: hidden;
+  }
+  .table-scroll {
+    overflow-x: auto;
+    padding-bottom: 5px;
+  }
+  .scrollbar {
+    height: 5px;
+    background-color: #f0f0f0;
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+  }
+  .scrollbar-thumb {
+    height: 100%;
+    background-color: #888;
+    cursor: pointer;
+  }
+  @media (max-width: 768px) {
+    #sidebar-wrapper {
+      left: -250px;
+    }
+    #sidebar-wrapper.active {
+      left: 0;
+    }
+    #page-content-wrapper {
+      margin-left: 0;
+      width: 100%;
+    }
+    #page-content-wrapper.active {
+      margin-left: 250px;
+    }
+    #menu-toggle {
+      display: block;
+    }
+    .table-scroll-container {
+      padding-bottom: 20px;
+    }
+    .scrollbar {
+      bottom: 15px;
+    }
+  }
+</style>
+</head>
+<body>
+<div class="d-flex" id="wrapper">
+  <!-- Sidebar -->
+  <div id="sidebar-wrapper">
+    <div class="sidebar-heading">
+      <img src="https://via.placeholder.com/100" alt="Logo" class="logo">
+      <span>Dashboard</span>
+    </div>
+    <div class="list-group list-group-flush">
+      <a href="Tableau_de_bord.html" class="list-group-item list-group-item-action active"><i class="fas fa-tachometer-alt"></i> Tableau de bord</a>
+      <a href="mon_compte.html" class="list-group-item list-group-item-action"><i class="fas fa-user"></i> Mon compte</a>
+      <a href="Bank.html" class="list-group-item list-group-item-action"><i class="fas fa-piggy-bank"></i> Bank</a>
+      <a href="Agent_Vendeurs.html" class="list-group-item list-group-item-action"><i class="fas fa-users"></i> Agent/Vendeur</a>
+      
+      <!-- Configuration Dropdown -->
+      <a href="#configSubmenu" data-toggle="collapse" aria-expanded="false" class="list-group-item list-group-item-action dropdown-toggle"><i class="fas fa-cogs"></i> Configuration</a>
+      <div class="collapse submenu" id="configSubmenu">
+        <a href="https://websim.ai/configuration/tirages" class="list-group-item list-group-item-action"><i class="fas fa-dice"></i> Tirages</a>
+        <a href="https://websim.ai/configuration/primes" class="list-group-item list-group-item-action"><i class="fas fa-trophy"></i> Primes</a>
+        <a href="https://websim.ai/configuration/utilisateurs" class="list-group-item list-group-item-action"><i class="fas fa-user-cog"></i> Utilisateurs</a>
+      </div>
+      
+      <!-- Surveillance Dropdown -->
+      <a href="#survSubmenu" data-toggle="collapse" aria-expanded="false" class="list-group-item list-group-item-action dropdown-toggle"><i class="fas fa-eye"></i> Surveillance</a>
+      <div class="collapse submenu" id="survSubmenu">
+        <a href="https://websim.ai/surveillance/blocage-boules" class="list-group-item list-group-item-action"><i class="fas fa-ban"></i> Blocage boules</a>
+        <a href="https://websim.ai/surveillance/limites" class="list-group-item list-group-item-action"><i class="fas fa-chart-line"></i> Limites</a>
+        <a href="https://websim.ai/surveillance/lots-gagnant" class="list-group-item list-group-item-action"><i class="fas fa-gift"></i> Lots gagnant</a>
+      </div>
+      
+      <!-- Rapport Dropdown -->
+      <a href="#rapportSubmenu" data-toggle="collapse" aria-expanded="false" class="list-group-item list-group-item-action dropdown-toggle"><i class="fas fa-chart-bar"></i> Rapport</a>
+      <div class="collapse submenu" id="rapportSubmenu">
+        <a href="https://websim.ai/rapport/journalier" class="list-group-item list-group-item-action"><i class="fas fa-calendar-day"></i> Journalier</a>
+        <a href="https://websim.ai/rapport/bilan" class="list-group-item list-group-item-action"><i class="fas fa-balance-scale"></i> Bilan</a>
+        <a href="https://websim.ai/rapport/fiche-gagnant" class="list-group-item list-group-item-action"><i class="fas fa-trophy"></i> Fiche gagnant</a>
+        <a href="https://websim.ai/rapport/fiche-vendu" class="list-group-item list-group-item-action"><i class="fas fa-receipt"></i> Fiche vendu</a>
+        <a href="https://websim.ai/rapport/fiche-eliminer" class="list-group-item list-group-item-action"><i class="fas fa-times-circle"></i> Fiche eliminer</a>
+      </div>
+    </div>
+  </div>
+  
+  <!-- Page Content -->
+  <div id="page-content-wrapper">
+    <nav class="navbar navbar-expand-lg navbar-light bg-light border-bottom">
+      <button class="btn btn-primary" id="menu-toggle"><i class="fas fa-bars"></i></button>
+      <div class="ml-auto">
+        <button class="btn btn-danger">
+          <i class="fas fa-power-off"></i> Déconnexion
+        </button>
+      </div>
+    </nav>
+    
+    <div id="content">
+      <h1 class="mt-4 mb-4">Gestion de la Bank</h1>
+      
+      <form id="bank-form">
+        <div class="form-group">
+          <label for="nom-bank">Nom de la Bank</label>
+          <input type="text" class="form-control" id="nom-bank" placeholder="Entrez le nom de la bank">
+          <button type="button" class="btn btn-secondary mt-2">Modifier</button>
+        </div>
+        
+        <div class="form-group">
+          <label for="adresse-bank">Adresse</label>
+          <input type="text" class="form-control" id="adresse-bank" placeholder="Entrez l'adresse de la bank">
+          <button type="button" class="btn btn-secondary mt-2">Modifier</button>
+        </div>
+        
+        <div class="form-group">
+          <label for="tel-bank">Téléphone</label>
+          <input type="tel" class="form-control" id="tel-bank" placeholder="Entrez le numéro de téléphone">
+          <button type="button" class="btn btn-secondary mt-2">Modifier</button>
+        </div>
+        
+        <div class="form-group">
+          <label for="logo-bank">Logo</label>
+          <input type="file" class="form-control-file" id="logo-bank">
+          <button type="button" class="btn btn-secondary mt-2">Modifier</button>
+        </div>
+        
+        <div class="form-group">
+          <label for="slogan-bank">Slogan</label>
+          <input type="text" class="form-control" id="slogan-bank" placeholder="Entrez le slogan de la bank">
+          <button type="button" class="btn btn-secondary mt-2">Modifier</button>
+        </div>
+      </form>
+      
+      <h2 class="mt-5 mb-3">Informations de la Bank</h2>
+      
+      <div class="table-scroll-container">
+        <div class="table-scroll">
+          <table class="table table-striped">
+            <thead>
+              <tr>
+                <th>Nom</th>
+                <th>Adresse</th>
+                <th>Téléphone</th>
+                <th>Logo</th>
+                <th>Slogan</th>
+                <th>Actions</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>Bank Example</td>
+                <td>123 Rue de la Finance, 75001 Paris</td>
+                <td>+33 1 23 45 67 89</td>
+                <td><img src="https://via.placeholder.com/50" alt="Logo Bank" width="50" height="50"></td>
+                <td>Votre argent, notre priorité</td>
+                <td>
+                  <button class="btn btn-sm btn-primary">Modifier</button>
+                  <button class="btn btn-sm btn-danger">Supprimer</button>
+                  <button class="btn btn-sm btn-warning">Désactiver</button>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+        <div class="scrollbar">
+          <div class="scrollbar-thumb"></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<footer class="footer">
+  <div class="container">
+    <div class="row">
+      <div class="col-md-6">
+        <p>&copy; 2023 Dashboard Loterie. Tous droits réservés.</p>
+      </div>
+      <div class="col-md-6 text-md-right">
+        <a href="#" class="text-muted mr-3">Conditions d'utilisation</a>
+        <a href="#" class="text-muted">Politique de confidentialité</a>
+      </div>
+    </div>
+  </div>
+</footer>
+
+<script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.3/dist/umd/popper.min.js"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+<script>
+  $(document).ready(function() {
+    $("#menu-toggle").click(function(e) {
+      e.preventDefault();
+      $("#wrapper").toggleClass("toggled");
+      $("#sidebar-wrapper").toggleClass("active");
+      $("#page-content-wrapper").toggleClass("active");
+    });
+
+    function checkWidth() {
+      if ($(window).width() <= 768) {
+        $("#wrapper").addClass("toggled");
+        $("#sidebar-wrapper").removeClass("active");
+        $("#page-content-wrapper").removeClass("active");
+      } else {
+        $("#wrapper").removeClass("toggled");
+        $("#sidebar-wrapper").addClass("active");
+        $("#page-content-wrapper").addClass("active");
+      }
+    }
+
+    checkWidth();
+    $(window).resize(checkWidth);
+
+    // Custom scrollbar functionality
+    const scrollContainer = document.querySelector('.table-scroll');
+    const scrollbar = document.querySelector('.scrollbar-thumb');
+
+    scrollContainer.addEventListener('scroll', () => {
+      const scrollPercentage = (scrollContainer.scrollLeft / (scrollContainer.scrollWidth - scrollContainer.clientWidth)) * 100;
+      scrollbar.style.width = `${scrollPercentage}%`;
+    });
+
+    scrollbar.addEventListener('mousedown', (e) => {
+      e.preventDefault();
+      const startX = e.clientX - scrollbar.offsetLeft;
+      const scrollbarWidth = scrollContainer.clientWidth;
+
+      const onMouseMove = (e) => {
+        const newX = e.clientX - startX;
+        const maxX = scrollContainer.clientWidth - scrollbar.offsetWidth;
+        const boundedX = Math.max(0, Math.min(newX, maxX));
+        const scrollPercentage = boundedX / maxX;
+        
+        scrollContainer.scrollLeft = scrollPercentage * (scrollContainer.scrollWidth - scrollContainer.clientWidth);
+      };
+
+      const onMouseUp = () => {
+        document.removeEventListener('mousemove', onMouseMove);
+        document.removeEventListener('mouseup', onMouseUp);
+      };
+
+      document.addEventListener('mousemove', onMouseMove);
+      document.addEventListener('mouseup', onMouseUp);
+    });
+  });
+</script>
+</body>
+</html>
